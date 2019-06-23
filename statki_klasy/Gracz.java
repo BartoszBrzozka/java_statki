@@ -125,8 +125,7 @@ public class Gracz {
 	    }
 	    
 	    public int helperFunctionWiersz(int wiersz) {
-	        if (wiersz == 0) return 0;
-  	       return wiersz - 1;
+	        return wiersz - 1;
   }
 	   
 	    

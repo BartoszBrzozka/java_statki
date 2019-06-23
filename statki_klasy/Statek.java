@@ -23,7 +23,7 @@ public class Statek {
 	
 	public boolean prawidlowoUstawiony(Pole[][] pole,  int statekWiersz, int statekKolumna) {
         //jesli namiary sa poza plansz¹ 
-		if (statekWiersz < 0 || statekWiersz > 10 || statekKolumna < 0 || statekKolumna > 10) {
+		if (statekWiersz < 0 || statekWiersz > 9 || statekKolumna < 0 || statekKolumna > 9) {
 			System.out.print("\nNamiary ustawianego masztu wykraczaj¹ poza granice planszy.\nUstaw ponownie:");
 			return false;
 		}
@@ -40,11 +40,20 @@ public class Statek {
 		for (int a = statekWiersz - 1; a < statekWiersz + extend1a; a++) {  
 			for (int b = statekKolumna -1; b < statekKolumna + extend1b; b++) { 
 				
-				//jesli statekWiersz i statekKolumna = 0
+				//by iteracja przeszla przez wszystkie mozliwe, dostepne opcje bez wpadania w nieskonczonosc 
 				if(a < 0) a = 0;
 				if(b < 0) b = 0;
-				if(a >= 9) a = 9;
-				if(b >= 9) b = 9;
+				
+				if(a >= 9) {
+					a = 9;
+					extend1a = 1;
+				} else extend1a = 2;
+				
+	            if (b >= 9) {
+	            	b = 9;
+	            	extend1b = 1;
+	            } else extend1b = 2;
+					
 	
 				if (a == statekWiersz && b == statekKolumna) continue; // pomin sprawdzenie miejsce gdzie ma nastapic ulokowanie statku
 				
@@ -54,15 +63,10 @@ public class Statek {
 						zadnegoStatku = true; //jesli to ten sam statek to sprawdzaj dalej
 					} else { //inny statek w kontakcie
 						System.out.print("\nInny statek w bezposrednim kontakcie!\nUstaw ponownie:");
-					//	break;
 						return false; 
 					}
 				}
-				// by nie zapetlilo sie bez konca
-				if (b >= 9) extend1b = 1;
 			}
-			// by nie zapetlilo sie bez konca
-			if (a >= 9) extend1a =1;
 		}
 		//gdy dany statek nie ma zadnego postawionego masztu
 		if (zadnegoStatku && zajmowanePola.size() == 0) {
@@ -75,14 +79,23 @@ public class Statek {
         int extend2j = 2;
 		for (int k = statekWiersz - 1; k < statekWiersz + extend2k; k++) {  
 
-			for (int j = statekKolumna -1; j < statekKolumna + extend2j; j++) {  
-				
-				//jesli statekWiersz i statekKolumna = 0 lub 10
+			for (int j = statekKolumna -1; j < statekKolumna + extend2j; j++) {
+
 				if(k < 0) k = 0;
 				if(j < 0) j = 0;
-				if(k >= 9) k = 9;
-				if(j >= 9) j = 9;
-
+				
+				
+				if(k >= 9) {
+					k = 9;
+					extend2k = 1;
+				} else extend2k = 2;
+				
+				
+				if(j >= 9) {
+					j = 9;
+					extend2j = 1;
+				} else extend2j = 2;
+					
 				if (k == statekWiersz && j == statekKolumna) continue; // miejsce gdzie ma nastapic ulokowanie statku
 				
 				boolean statekWzasiegu = pole[k][j].statek();  //czy jakis statek wystepuje w bezposrednim zasiegu omawianej lokalizacji
@@ -112,11 +125,9 @@ public class Statek {
 				        }
 					}
 				}
-				// by nie zapetlilo sie bez konca
-				if (j >= 9) extend2j = 1;
+
 			}
-			// by nie zapetlilo sie bez konca
-			if (k >= 9) extend2k = 1;
+
 		}
 		//gdy ¿aden ze statkow w zasiegu nie przylega pionowo/poziomo
 		System.out.println("\nMaszty musz¹ do siebie przylegaæ pionowo lub poziomo!\nUstaw ponownie:");

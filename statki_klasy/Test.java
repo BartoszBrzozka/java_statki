@@ -11,9 +11,10 @@ public class Test{
 		Plansza pl = new Plansza(plansza, pole); // obiekt typu plansza - argumenty rozne dla róznych plansz!!!
 		Plansza pl1 = new Plansza(plansza1, pole1);
 		
-
+         
 		Gracz g1 = new Gracz("michal");
 		Gracz g2 = new Gracz("dummyAI");
+
 		pl.rysujPlansze(plansza1);
 		g1.ustawStatek(pole1, pl1, plansza1, g2);
 		pl1.rysujPlansze(plansza);
@@ -23,17 +24,7 @@ public class Test{
 		boolean zatopioneG1; // slabe nazewnictwo zatopione = true choc nie sa zatopione ale dziala wiec whatever
 		boolean zatopioneG2;
 
-		do {
-			zatopioneG1 = true;
-			for (Statek statek : g1.statki) {  //sprawdzenie czy wszystkie statki gracza sa zatopione
-		    	zatopioneG1 = zatopioneG1 && statek.jestZatopiony();   // jjesli wszystkie statki zatopione to zatopioneG1 = false
-			    
-			}
-			zatopioneG2 = true;
-			for (Statek statek : g2.statki) { 
-            	zatopioneG2 = zatopioneG2 && statek.jestZatopiony();
-		    }
-	    	
+		do {    	
             pl1.sprawdzPlansze(plansza, pole, g2);
             pl1.rysujPlansze(plansza);
 			g1.strzelaj(pole, pl, plansza, g2);
@@ -42,13 +33,38 @@ public class Test{
             pl.rysujPlansze(plansza1);
 			g2.strzelaj(pole1, pl1, plansza1, g1);
 			
+
+			
+			zatopioneG1 = true;
+			for (Statek statek : g1.statki) {  //sprawdzenie czy wszystkie statki gracza sa zatopione
+		    	zatopioneG1 = zatopioneG1 && statek.jestZatopiony();   // jjesli wszystkie statki zatopione to zatopioneG1 = false  
+			}
+			zatopioneG2 = true;
+			for (Statek statek : g2.statki) { 
+            	zatopioneG2 = zatopioneG2 && statek.jestZatopiony();
+		    }
+
+        if (zatopioneG1 || zatopioneG2) break;  //dopoki ktorys z graczy nie stracil wszystkich statkow
 		}
-		while (!zatopioneG1 || !zatopioneG1); //dopoki ktorys z graczy nie stracil wszystkich statkow
+		while (!zatopioneG1 || !zatopioneG2); 
 		
-		System.out.println("Koniec gry!\nZwyciezca zostal: ");
-		String winner = g1.liczbaPunktow > g2.liczbaPunktow ? "" + g1.getID() : "" + g2.getID();
+		System.out.println("\nKoniec gry\n");
+		String winner ="";
 		
-		System.out.println(winner + "!\n Brawo!");
+		
+		if (g1.liczbaPunktow > g2.liczbaPunktow) {
+			winner = g1.getID();
+			}
+		else if (g1.liczbaPunktow < g2.liczbaPunktow) {
+			winner = g2.getID();
+		}
+		else if (g1.liczbaPunktow == g2.liczbaPunktow) {
+			winner = g1.getID() + " oraz " + g2.getID();
+			System.out.println("Mamy remis!\n");
+		}
+		
+		System.out.println("Zwyciêzc¹ zostaje: " + winner);
+		System.out.println("\nBrawo!");
 	}
 }
 

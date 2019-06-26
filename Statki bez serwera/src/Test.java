@@ -45,10 +45,23 @@ public class Test{
 		}
 		while (!zatopioneG1 || !zatopioneG1); //dopoki ktorys z graczy nie stracil wszystkich statkow
 		
-		System.out.println("Koniec gry!\nZwyciezca zostal: ");
-		String winner = g1.liczbaPunktow > g2.liczbaPunktow ? "" + g1.getID() : "" + g2.getID();
+		System.out.println("\nKoniec gry\n");
+		String winner ="";
 		
-		System.out.println(winner + "!\n Brawo!");
+		
+		if (g1.liczbaPunktow > g2.liczbaPunktow) {
+			winner = g1.getID();
+			}
+		else if (g1.liczbaPunktow < g2.liczbaPunktow) {
+			winner = g2.getID();
+		}
+		else if (g1.liczbaPunktow == g2.liczbaPunktow) {
+			winner = g1.getID() + " oraz " + g2.getID();
+			System.out.println("Mamy remis!\n");
+		}
+		
+		System.out.println("Zwyciêzc¹ zostaje: " + winner);
+		System.out.println("\nBrawo!");
 	}
 }
 

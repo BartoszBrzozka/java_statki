@@ -7,8 +7,7 @@ public class Gracz {
     ArrayList<Statek> statki = new ArrayList<>();
     public  int liczbaPunktow;
     public  String ID;
-    Scanner myObj = new Scanner(System.in);
-	
+    
     public Gracz(String ID) {
 	    for (int i = 0; i < typyStatkow.length; i++) {
 	    	Statek tempShip = new Statek(typyStatkow[i]);
@@ -37,40 +36,20 @@ public class Gracz {
 	    		System.out.println("\nUstaw " + statek.liczbaMasztow + "-masztowca: ");
 	    		int liczbaPozostalychMasztow = statek.liczbaMasztow;
 	    		while (liczbaPozostalychMasztow > 0) {
-	    			
+	    			Scanner myObj = new Scanner(System.in);
 	    			int locX;
 	    			int locY;
-	    			char[] c;
-	    			System.out.println("\nWprowadz wspó³rzêdne statku:"); 
-	    			c = myObj.next().toCharArray();
-	    			int num1 = 0;
-	    			if (c.length > 3) {
-	    				System.out.println("Podano z³e wspó³rzêdne!"); 
-    					continue;
-	    			}
-	    			else if(c.length == 3) {
-	    				if (c[1] == '1' && c[2] == '0') {
-	    					num1 = 10;
-	    				}
-	    				else {
-	    					System.out.println("Podano z³e wspó³rzêdne!"); 
-	    					continue;
-	    				}
-	    			}
-	    			else{
-	    				if (c.length == 2) {
-	    				num1 = Character.getNumericValue(c[1]);
-	    				}
-	    				else
-	    				{
-	    					System.out.println("Podano z³e wspó³rzêdne!"); 
-	    					continue;
-	    				}
-	    			}
-
-	    			locX = helperFunctionWiersz(num1);
-	    			locY = helperFunctionKol(c[0]);
 	    			
+	    			System.out.println("\nWprowadz wspó³rzêdne statku (kolumna): "); 
+
+	    			char c = myObj.next().charAt(0);
+	    			locY = helperFunctionKol(c);
+	    			
+	    			System.out.println("\nWprowadz wspó³rzêdne statku (wiersz): "); 
+	    			
+	    			while (!myObj.hasNextInt()) myObj.next();
+	    			int num1 = myObj.nextInt();
+	    			locX = helperFunctionWiersz(num1);
 	    			
 	    			if (statek.prawidlowoUstawiony(pole, locX, locY)) { //maszt wstawiony
 	    				pole[locX][locY].setStatek();
@@ -87,11 +66,8 @@ public class Gracz {
 
 	    		}			
 	    	}
-	    	
 	    	System.out.println("\n| | | | | Wszystkie statki zostaly ustawione! | | | | |");
 	    	System.out.println("--------------------------------------------------------\n");
-	    	ustawione = true;
-	    	
 	    	
 	    	
 	    	//zakryj statki dla przeciwnika    
@@ -102,7 +78,6 @@ public class Gracz {
 					}
 				}
 			}
-            
     }
 	    // dodac warunki do strzalu: nie moze w to samo miejsce, nie moze poza plansze
 	    public void strzelaj(Pole[][] poleWroga, Plansza plansza, String[][] plansza2, Gracz przeciwnik ) {
@@ -150,8 +125,7 @@ public class Gracz {
 	    }
 	    
 	    public int helperFunctionWiersz(int wiersz) {
-	        if (wiersz == 0) return 0;
-  	       return wiersz - 1;
+	        return wiersz - 1;
   }
 	   
 	    

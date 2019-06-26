@@ -14,3 +14,5 @@ Klasy Server - client - Joyce Opio
 Klasa Test - Michał Skrzypczyński (hello screen - Krzysztof Czerski)
 
 Poprawki - Bartosz Brzózka
+
+Wersja server - client niedokończona - brak komuniacji między clientami po etapie zadeklarowania pozycji statków na planszy - gra niemożliwa. Założenie jak miało to wyglądać w wersji bez serwera.
